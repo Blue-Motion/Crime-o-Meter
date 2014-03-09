@@ -10,10 +10,10 @@ import java.net.Socket;
 
 import rug.netcom.crimemeter.messages.Report;
 
-public class KKMultiServerThread extends Thread {
+public class TCPServerThread extends Thread {
 	private Socket socket = null;
 
-	public KKMultiServerThread(Socket socket) {
+	public TCPServerThread(Socket socket) {
 		super("KKMultiServerThread");
 		this.socket = socket;
 	}

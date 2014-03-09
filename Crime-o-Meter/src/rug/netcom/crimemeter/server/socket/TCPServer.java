@@ -2,7 +2,7 @@ package rug.netcom.crimemeter.server.socket;
 import java.net.*;
 import java.io.*;
 
-public class KKMultiServer {
+public class TCPServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
         boolean listening = true;
@@ -15,7 +15,7 @@ public class KKMultiServer {
         }
 
         while (listening)
-	    new KKMultiServerThread(serverSocket.accept()).start();
+	    new TCPServerThread(serverSocket.accept()).start();
 
         serverSocket.close();
     }
