@@ -80,16 +80,14 @@ public class Mysqldriver {
       // also possible to get the columns via the column number
       // which starts at 1
       // e.g., resultSet.getSTring(2);
-      String user = resultSet.getString("myuser");
-      String website = resultSet.getString("webpage");
-      String summary = resultSet.getString("summary");
-      Date date = resultSet.getDate("datum");
-      String comment = resultSet.getString("comments");
+      String user = resultSet.getString("id");
+      String website = resultSet.getString("type");
+      String summary = resultSet.getString("message");
+      Date date = resultSet.getDate("timestamp");
       System.out.println("User: " + user);
       System.out.println("Website: " + website);
       System.out.println("Summary: " + summary);
       System.out.println("Date: " + date);
-      System.out.println("Comment: " + comment);
     }
   }
 
