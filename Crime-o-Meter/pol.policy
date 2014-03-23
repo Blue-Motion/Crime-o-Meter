@@ -1,0 +1,3 @@
+grant codeBase "file:${workspace_loc}/Crime-o-Meter/src/" {
+    permission java.security.AllPermission;
+};

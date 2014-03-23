@@ -20,7 +20,7 @@ public class Mysqldriver {
       // this will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.jdbc.Driver");
       // setup the connection with the DB.
-      connect = DriverManager.getConnection("jdbc:mysql://mysql02.totaalholding.nl/ermanu1x_crimemeter", "ermanu1x_crime","meter");
+      connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
       System.out.println("reading");
       // statements allow to issue SQL queries to the database
       statement = connect.createStatement();
