@@ -6,7 +6,7 @@ import java.rmi.registry.Registry;
 import rug.netcom.crimemeter.server.StatisticsInterface;
 
 public class RMIClient {
-
+//asdaf
 	public static void main (String[] argv) {
 		  try {
 			  Registry registry = LocateRegistry.getRegistry();
