@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class Report implements Serializable{
 
+	private static final long serialVersionUID = -8081460720336176259L;
 	private String type, message;
 	private Date timestamp;
 	
