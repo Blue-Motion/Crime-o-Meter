@@ -15,6 +15,7 @@ public class RMIClient {
 			  System.out.println(str);
 		  } catch (Exception e) {
 			  System.out.println ("RMIClient exception: " + e);
+			  e.printStackTrace();
 		  }
 		}
 

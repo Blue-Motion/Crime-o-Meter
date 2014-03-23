@@ -3,6 +3,7 @@ package rug.netcom.crimemeter.server;
 import java.util.ArrayList;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.database.Mysqldriver;
 
 public class Statistics implements StatisticsInterface {
 	
@@ -17,6 +18,8 @@ public class Statistics implements StatisticsInterface {
 	}
 	
 	public String getStatistics(){
-		return "No bicycles stolen this week";
+		Mysqldriver m = new Mysqldriver();
+		Report r = m.getReport(0);
+		return r.toString();
 	}
 }

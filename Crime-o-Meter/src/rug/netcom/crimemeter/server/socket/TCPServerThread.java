@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.database.Mysqldriver;
 
 public class TCPServerThread extends Thread {
 	private Socket socket = null;
@@ -34,6 +35,14 @@ public class TCPServerThread extends Thread {
 			try {
 				while ((message = (Report)ois.readObject()) != null) {
 					System.out.println(message);
+					 Mysqldriver dao = new Mysqldriver();
+					    try {
+							dao.addReport(message.getType(), message.getMessage());
+						} catch (Exception e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
 					out.println(message);
 				}
 			} catch (ClassNotFoundException e) {
