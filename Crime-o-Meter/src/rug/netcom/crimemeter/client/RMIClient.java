@@ -4,7 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 import rug.netcom.crimemeter.server.StatisticsInterface;
-
+//asdf
 public class RMIClient {
 
 	public static void main (String[] argv) {
