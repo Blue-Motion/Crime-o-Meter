@@ -10,7 +10,6 @@ import java.sql.Statement;
 import java.util.Date;
 
 import rug.netcom.crimemeter.messages.Report;
-import rug.netcom.crimemeter.server.DBCredentials;
 
 public class Mysqldriver {
   private Connection connect = null;
