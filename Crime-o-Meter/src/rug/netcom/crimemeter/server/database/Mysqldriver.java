@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.Date;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.DBCredentials;
 
 public class Mysqldriver {
   private Connection connect = null;
@@ -51,10 +52,10 @@ public class Mysqldriver {
 
   }
   
-  public boolean addReport(Report r){
+  public boolean addReport(String str1, String str2){
 	  
-	  String type = r.getType();
-	  String message = r.getMessage();
+	  String type = str1;
+	  String message = str2;
 	  
       try {
   		Class.forName("com.mysql.jdbc.Driver");
