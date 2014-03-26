@@ -1,16 +1,16 @@
 package rug.netcom.crimemeter.messages;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Report implements Serializable{
 
 	private static final long serialVersionUID = -8081460720336176259L;
 	private int id;
 	private String type, message;
-	private Date time;
+	private Timestamp time;
 	
-	public Report(int id, String type, String message, Date time){
+	public Report(int id, String type, String message, Timestamp time){
 		this.id = id;
 		this.message = message;
 		this.type = type;
@@ -36,12 +36,7 @@ public class Report implements Serializable{
 		this.message = message;
 	}
 
-
-	private Date timestamp;
-	
-	public Report(String type, Date timestamp, String message){
-	
-		this.timestamp = timestamp;
+	public Report(String type, String message){
 		this.type = type;
 		this.message = message;
 		
@@ -49,7 +44,7 @@ public class Report implements Serializable{
 
 	
 	public String toString(){
-		return timestamp + ":" + type+ "." +message;
+		return time + ":" + type+ "." +message;
 	}
 	
 }

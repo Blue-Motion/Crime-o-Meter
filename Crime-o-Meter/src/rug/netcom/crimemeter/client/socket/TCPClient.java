@@ -1,6 +1,7 @@
 package rug.netcom.crimemeter.client.socket;
 import java.io.*;
 import java.net.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import rug.netcom.crimemeter.messages.Report;
@@ -37,7 +38,7 @@ public class TCPClient {
 			System.out.println("What is your message?");
 			String message = stdIn.readLine();
 
-			Report report = new Report(reporttype, new Date(), message);
+			Report report = new Report(reporttype, message);
 			
 			if (report != null) {
 				out.writeObject(report);

@@ -7,9 +7,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
+import java.sql.Timestamp;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.DBCredentials;
 
 public class Mysqldriver {
   private Connection connect = null;
@@ -127,7 +128,7 @@ public class Mysqldriver {
 	      int id = resultSet.getInt("id");
 	      String type = resultSet.getString("type");
 	      String message = resultSet.getString("message");
-	      Date date = resultSet.getDate("timestamp");
+	      Timestamp date = resultSet.getTimestamp("timestamp");
 	      return new Report(id, type, message, date);
 	  }
   

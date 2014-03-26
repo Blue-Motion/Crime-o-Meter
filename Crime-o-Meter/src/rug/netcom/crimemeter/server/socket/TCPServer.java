@@ -2,6 +2,7 @@ package rug.netcom.crimemeter.server.socket;
 import java.net.*;
 import java.io.*;
 
+
 public class TCPServer {
     public static void main(String[] args) throws IOException {
         ServerSocket serverSocket = null;
