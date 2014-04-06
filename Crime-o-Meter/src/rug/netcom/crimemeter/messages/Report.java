@@ -12,7 +12,7 @@ public class Report implements Serializable {
 
 	private static final long serialVersionUID = -8081460720336176259L;
 	private int id;
-	private String type, message;
+	private String type, message, location;
 	private Timestamp time;
 
 	public Report(int id, String type, String message, Timestamp time) {
@@ -20,6 +20,7 @@ public class Report implements Serializable {
 		this.message = message;
 		this.type = type;
 		this.time = time;
+		this.location = location;
 	}
 
 	public static Report fromByteArray(byte[] data) {
@@ -66,6 +67,14 @@ public class Report implements Serializable {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	
+	public String getLocation(){
+		return location;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
 	}
 
 	public Report(String type, String message) {

@@ -4,6 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ObjectInputStream;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.database.Mysqldriver;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -35,6 +36,13 @@ public class Worker {
       
       Report report = Report.fromByteArray(data);
       
+      Mysqldriver dao = new Mysqldriver();
+	  try {
+		dao.addReport(report.getType(), report.getMessage(), report.getLocation());
+	  } catch (Exception e1) {
+		e1.printStackTrace();
+	  }
+	  
       System.out.println(" [x] Received '" + report + "'");
       System.out.println(" [x] Done");
 
