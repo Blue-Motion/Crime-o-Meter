@@ -4,14 +4,14 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
-import rug.netcom.crimemeter.server.database.Mysqldriver;
+import rug.netcom.crimemeter.server.database.DBConnector;
 
 public class RMIServer {
 
 	public static void main (String[] argv) {
 
 		
-		Mysqldriver m = new Mysqldriver();
+		DBConnector m = new DBConnector();
 		try {
 			m.readDataBase(null, 10);
 		} catch (Exception e1) {

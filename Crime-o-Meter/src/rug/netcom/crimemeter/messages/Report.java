@@ -15,7 +15,7 @@ public class Report implements Serializable {
 	private String type, message, location;
 	private Timestamp time;
 
-	public Report(int id, String type, String message, Timestamp time) {
+	public Report(int id, String type, String location, String message, Timestamp time) {
 		this.id = id;
 		this.message = message;
 		this.type = type;
@@ -23,6 +23,13 @@ public class Report implements Serializable {
 		this.location = location;
 	}
 
+	public Report(String type, String location, String message) {
+		this.type = type;
+		this.location = location;
+		this.message = message;
+
+	}
+	
 	public static Report fromByteArray(byte[] data) {
 		Report report = null;
 		
@@ -75,12 +82,6 @@ public class Report implements Serializable {
 	
 	public void setLocation(String location){
 		this.location = location;
-	}
-
-	public Report(String type, String message) {
-		this.type = type;
-		this.message = message;
-
 	}
 
 	public String toString() {

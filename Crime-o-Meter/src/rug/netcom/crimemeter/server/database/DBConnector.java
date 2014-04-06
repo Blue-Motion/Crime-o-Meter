@@ -1,20 +1,16 @@
 package rug.netcom.crimemeter.server.database;
 
-import java.io.Closeable;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 
 import rug.netcom.crimemeter.messages.Report;
-import rug.netcom.crimemeter.server.database.DBCredentials;
 
-public class Mysqldriver {
+public class DBConnector {
   private Connection connect = null;
-  private Statement statement = null;
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
 
@@ -23,10 +19,6 @@ public class Mysqldriver {
       // this will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.jdbc.Driver");
       connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
-
-      //statement = connect.createStatement();
-      //resultSet = statement.executeQuery("select * from Report");
-      //writeResultSet(resultSet);
       
       String loc = (location == null) ? "" : " AND location = ?";
 
@@ -35,23 +27,11 @@ public class Mysqldriver {
       int StmtIndex = 1;
 
       if(location != null) preparedStatement.setString(StmtIndex++, location);
-          
       preparedStatement.setInt(StmtIndex, limit);
-
       
       resultSet = preparedStatement.executeQuery();
       writeResultSet(resultSet);
 
-//      // remove again the insert comment
-//      preparedStatement = connect
-//      .prepareStatement("delete from FEEDBACK.COMMENTS where myuser= ? ; ");
-//      preparedStatement.setString(1, "Test");
-//      preparedStatement.executeUpdate();
-//      
-//      resultSet = statement
-//      .executeQuery("select * from FEEDBACK.COMMENTS");
-//      writeMetaData(resultSet);
-//      
     } catch (Exception e) {
       throw e;
     } finally {
@@ -65,7 +45,7 @@ public class Mysqldriver {
       try {
   		Class.forName("com.mysql.jdbc.Driver");
 		connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
-		preparedStatement  = connect.prepareStatement("INSERT into Report (type, location, message) VALUES (?,?) ;");
+		preparedStatement  = connect.prepareStatement("INSERT into Report (type, location, message) VALUES (?,?,?) ;");
 		preparedStatement.setString(1, type);
 		preparedStatement.setString(2, location);
 		preparedStatement.setString(2, message);
@@ -95,8 +75,7 @@ public class Mysqldriver {
       connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
 
 
-      preparedStatement = connect
-          .prepareStatement("SELECT * from Report WHERE id=?;");
+      preparedStatement = connect.prepareStatement("SELECT * from Report WHERE id=?;");
       preparedStatement.setInt(1, id);
       resultSet = preparedStatement.executeQuery();
       report = writeReport(resultSet);
@@ -128,15 +107,16 @@ public class Mysqldriver {
 
   
   private Report writeReport(ResultSet resultSet) throws SQLException {
-	    // resultSet is initialised before the first data set
-	    resultSet.next();
-	      
-	      int id = resultSet.getInt("id");
-	      String type = resultSet.getString("type");
-	      String message = resultSet.getString("message");
-	      Timestamp date = resultSet.getTimestamp("timestamp");
-	      return new Report(id, type, message, date);
-	  }
+		// resultSet is initialised before the first data set
+		resultSet.next();
+
+		int id = resultSet.getInt("id");
+		String type = resultSet.getString("type");
+		String location = resultSet.getString("location");
+		String message = resultSet.getString("message");
+		Timestamp date = resultSet.getTimestamp("timestamp");
+		return new Report(id, type, location, message, date);
+	}
   
   private void writeResultSet(ResultSet resultSet) throws SQLException {
     // resultSet is initialised before the first data set
@@ -158,12 +138,11 @@ public class Mysqldriver {
 
   // you need to close all three to make sure
   private void close() {
-    //close(resultSet);
-    //close(statement);
-    //close(connect);
+    close(resultSet);
+    close(connect);
   }
   
-  private void close(Closeable c) {
+  private void close(AutoCloseable c) {
     try {
       if (c != null) {
         c.close();

@@ -34,7 +34,7 @@ public class NewTask {
 	System.out.println("What is the location of the incident?");
 	String location = stdIn.readLine();
 
-	Report report = new Report(reporttype, message, location);
+	Report report = new Report(reporttype, location, message);
     
     channel.basicPublish( "", TASK_QUEUE_NAME, 
                 MessageProperties.PERSISTENT_TEXT_PLAIN,

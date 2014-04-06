@@ -1,7 +1,7 @@
 package rug.netcom.crimemeter.server;
 
 import rug.netcom.crimemeter.messages.Report;
-import rug.netcom.crimemeter.server.database.Mysqldriver;
+import rug.netcom.crimemeter.server.database.DBConnector;
 
 public class Statistics implements StatisticsInterface {
 	
@@ -11,7 +11,7 @@ public class Statistics implements StatisticsInterface {
 	
 	
 	public String getStatistics(){
-		Mysqldriver m = new Mysqldriver();
+		DBConnector m = new DBConnector();
 		Report r = m.getReport(1);
 		return r.toString();
 	}
