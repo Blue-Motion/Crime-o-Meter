@@ -52,17 +52,19 @@ public class Mysqldriver {
 
   }
   
-  public boolean addReport(String str1, String str2){
+  public boolean addReport(String str1, String str2, String str 3){
 	  
 	  String type = str1;
 	  String message = str2;
+	  String location = str3;
 	  
       try {
   		Class.forName("com.mysql.jdbc.Driver");
 		connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
-		preparedStatement  = connect.prepareStatement("INSERT into Report (type, message) VALUES (?,?) ;");
+		preparedStatement  = connect.prepareStatement("INSERT into Report (type, message, location) VALUES (?,?,?) ;");
 		preparedStatement.setString(1, type);
 		preparedStatement.setString(2, message);
+		preparedStatement.setString(3, location);
 		preparedStatement.executeUpdate();
       
 	} catch (ClassNotFoundException e1) {
@@ -127,9 +129,10 @@ public class Mysqldriver {
 	      
 	      int id = resultSet.getInt("id");
 	      String type = resultSet.getString("type");
+	      String location = resultSet.getString("location");
 	      String message = resultSet.getString("message");
 	      Timestamp date = resultSet.getTimestamp("timestamp");
-	      return new Report(id, type, message, date);
+	      return new Report(id, type, location, message, date);
 	  }
   
   private void writeResultSet(ResultSet resultSet) throws SQLException {

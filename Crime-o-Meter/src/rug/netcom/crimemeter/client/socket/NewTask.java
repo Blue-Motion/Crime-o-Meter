@@ -13,35 +13,34 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
 
 public class NewTask {
-  
-  private static final String TASK_QUEUE_NAME = "task_queue";
 
-  public static void main(String[] argv) throws Exception {
+	private static final String TASK_QUEUE_NAME = "task_queue";
 
-    ConnectionFactory factory = new ConnectionFactory();
-    factory.setHost("localhost");
-    Connection connection = factory.newConnection();
-    Channel channel = connection.createChannel();
-    
-    channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
-    
-    //String message = getMessage(argv);
-    BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("What type of report do you want to send?");
-	String reporttype = stdIn.readLine();
-	System.out.println("What is your message?");
-	String message = stdIn.readLine();
+	public static void main(String[] argv) throws Exception {
 
-	Report report = new Report(reporttype, message);
-    
-    channel.basicPublish( "", TASK_QUEUE_NAME, 
-                MessageProperties.PERSISTENT_TEXT_PLAIN,
-                report.toByteArray());
-    System.out.println(" [x] Sent '" + report + "'");
-    
-    channel.close();
-    connection.close();
-  }
-    
-  
+		ConnectionFactory factory = new ConnectionFactory();
+		factory.setHost("localhost");
+		Connection connection = factory.newConnection();
+		Channel channel = connection.createChannel();
+
+		channel.queueDeclare(TASK_QUEUE_NAME, true, false, false, null);
+
+		BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("What type of report do you want to send?");
+		String reporttype = stdIn.readLine();
+		System.out.println("Where did the incident happen? (City, street)");
+		String location = stdIn.readLine();
+		System.out.println("Summary of incident: ");
+		String message = stdIn.readLine();
+
+		Report report = new Report(reporttype, location, message);
+
+		channel.basicPublish("", TASK_QUEUE_NAME,
+				MessageProperties.PERSISTENT_TEXT_PLAIN, report.toByteArray());
+		System.out.println(" [x] Sent '" + report + "'");
+
+		channel.close();
+		connection.close();
+	}
+
 }

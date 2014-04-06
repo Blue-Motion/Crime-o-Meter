@@ -12,13 +12,14 @@ public class Report implements Serializable {
 
 	private static final long serialVersionUID = -8081460720336176259L;
 	private int id;
-	private String type, message;
+	private String type, message, location;
 	private Timestamp time;
 
-	public Report(int id, String type, String message, Timestamp time) {
+	public Report(int id, String type, String location, String message, Timestamp time) {
 		this.id = id;
 		this.message = message;
 		this.type = type;
+		this.location = location;
 		this.time = time;
 	}
 
@@ -67,15 +68,24 @@ public class Report implements Serializable {
 	public void setMessage(String message) {
 		this.message = message;
 	}
+	
+	public String getLocation(){
+		return location;
+	}
+	
+	public void setLocation(String location){
+		this.location = location;
+	}
 
-	public Report(String type, String message) {
+	public Report(String type, String location, String message) {
 		this.type = type;
+		this.location = location;
 		this.message = message;
 
 	}
 
 	public String toString() {
-		return time + ":" + type + "." + message;
+		return ("\nTime: " + time + "\n Type: " + type + "\n Summary: " + message);
 	}
 
 }
