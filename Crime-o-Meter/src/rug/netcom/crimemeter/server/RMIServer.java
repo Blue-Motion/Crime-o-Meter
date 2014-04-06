@@ -13,7 +13,7 @@ public class RMIServer {
 		
 		Mysqldriver m = new Mysqldriver();
 		try {
-			m.readDataBase(10);
+			m.readDataBase(null, 10);
 		} catch (Exception e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
