@@ -28,10 +28,15 @@ public class Mysqldriver {
       //resultSet = statement.executeQuery("select * from Report");
       //writeResultSet(resultSet);
       
-      String locQuery = (location == null) ? "" : "WHERE location = ?";
+      String loc = (location == null) ? "" : " AND location = ?";
 
-      preparedStatement = connect.prepareStatement("SELECT * from Report WHERE 1" + locQuery + " ORDER By timestamp DESC LIMIT ?");
-      preparedStatement.setInt(1, limit);
+      preparedStatement = connect.prepareStatement("SELECT * from Report WHERE 1" + loc + " ORDER By timestamp DESC LIMIT ?");
+
+      int StmtIndex = 1;
+
+      if(location != null) preparedStatement.setString(StmtIndex++, location);
+          
+      preparedStatement.setInt(StmtIndex, limit);
 
       
       resultSet = preparedStatement.executeQuery();
@@ -55,16 +60,14 @@ public class Mysqldriver {
 
   }
   
-  public boolean addReport(String str1, String str2){
-	  
-	  String type = str1;
-	  String message = str2;
+  public boolean addReport(String type, String location, String message){
 	  
       try {
   		Class.forName("com.mysql.jdbc.Driver");
 		connect = DriverManager.getConnection("jdbc:mysql://" + DBCredentials.host + DBCredentials.db , DBCredentials.user, DBCredentials.password);
-		preparedStatement  = connect.prepareStatement("INSERT into Report (type, message) VALUES (?,?) ;");
+		preparedStatement  = connect.prepareStatement("INSERT into Report (type, location, message) VALUES (?,?) ;");
 		preparedStatement.setString(1, type);
+		preparedStatement.setString(2, location);
 		preparedStatement.setString(2, message);
 		preparedStatement.executeUpdate();
       
