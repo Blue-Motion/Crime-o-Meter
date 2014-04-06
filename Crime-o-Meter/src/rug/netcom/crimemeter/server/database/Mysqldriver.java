@@ -10,7 +10,7 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 
 import rug.netcom.crimemeter.messages.Report;
-import rug.netcom.crimemeter.server.DBCredentials;
+import rug.netcom.crimemeter.server.database.DBCredentials;
 
 public class Mysqldriver {
   private Connection connect = null;
@@ -18,7 +18,7 @@ public class Mysqldriver {
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
 
-  public void readDataBase() throws Exception {
+  public void readDataBase(String location, int limit) throws Exception {
     try {
       // this will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.jdbc.Driver");
@@ -27,10 +27,13 @@ public class Mysqldriver {
       //statement = connect.createStatement();
       //resultSet = statement.executeQuery("select * from Report");
       //writeResultSet(resultSet);
+      
+      String locQuery = (location == null) ? "" : "WHERE location = ?";
 
-      preparedStatement = connect
-          .prepareStatement("SELECT * from Report");
- 
+      preparedStatement = connect.prepareStatement("SELECT * from Report WHERE 1" + locQuery + " ORDER By timestamp DESC LIMIT ?");
+      preparedStatement.setInt(1, limit);
+
+      
       resultSet = preparedStatement.executeQuery();
       writeResultSet(resultSet);
 
@@ -139,14 +142,14 @@ public class Mysqldriver {
       // also possible to get the columns via the column number
       // which starts at 1
       // e.g., resultSet.getSTring(2);
-      String user = resultSet.getString("id");
-      String website = resultSet.getString("type");
-      String summary = resultSet.getString("message");
-      //Date date = resultSet.getDate("timestamp");
-      System.out.println("User: " + user);
-      System.out.println("Website: " + website);
-      System.out.println("Summary: " + summary);
-      //System.out.println("Date: " + date);
+      String id = resultSet.getString("id");
+      String type = resultSet.getString("type");
+      String message = resultSet.getString("message");
+      Timestamp date = resultSet.getTimestamp("timestamp");
+      System.out.println("ID: " + id);
+      System.out.println("Type: " + type);
+      System.out.println("Message: " + message);
+      System.out.println("Date: " + date);
     }
   }
 

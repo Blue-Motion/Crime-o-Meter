@@ -9,8 +9,15 @@ import rug.netcom.crimemeter.server.database.Mysqldriver;
 public class RMIServer {
 
 	public static void main (String[] argv) {
-		//System.setSecurityManager (new RMISecurityManager());
-	
+
+		
+		Mysqldriver m = new Mysqldriver();
+		try {
+			m.readDataBase(10);
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		try {
 			StatisticsInterface statistics = new Statistics();
