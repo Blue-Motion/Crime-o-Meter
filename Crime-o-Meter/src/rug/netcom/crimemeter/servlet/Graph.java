@@ -9,6 +9,7 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
@@ -34,7 +35,8 @@ public class Graph extends HttpServlet {
 	/** Draw a Graphical Chart in response to a user request */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException {
 		ArrayList<Graphdata> results = null;
-		Date d = new Date();
+		Calendar cal = Calendar.getInstance();
+		Date d = cal.getTime();
 		String days = request.getParameter("days");
 		String location = request.getParameter("location");
 		String type = request.getParameter("type");
@@ -49,7 +51,6 @@ public class Graph extends HttpServlet {
 			  System.out.println ("RMIClient exception: " + e);
 		  }
 		
-		System.out.println(results);
 		int maxnumber = Collections.max(results).NUMBER;
 		
 		response.setContentType("image/jpeg");
@@ -64,17 +65,21 @@ public class Graph extends HttpServlet {
 		g.setColor(Color.white);
 		g.fillRect(0, 0, W, H);
 		g.setColor(Color.black);
-		for(int i=0;i<=maxnumber;i++) g.drawString(Integer.toString(i), 20, H - i*20);
+		for(int i=0;i<=maxnumber;i++) g.drawString(Integer.toString(i), 10, H - i*20);
 		g.setColor(Color.red);
 		int j=0;
 		for(int i=0;i<ndays;i++){
+			int n = results.get(j).NUMBER;
 			if(sdf.format(results.get(j).DATE).equals(sdf.format(new java.sql.Date(d.getTime() - i*1000*60*60*24)))){
-				g.fillRect(40+(10-i)*ndays, H-20*results.get(j).NUMBER, 6, 20*results.get(j).NUMBER);
+				System.out.println("number" + n + " " + i);
+				
+				g.fillRect(10+10*(ndays-i), H-20*n-10, 6, 20*n+10);
 				j++;
+				if(j >= results.size()) break;
 			}
 			
 		}
-
+			
 		// Write the output
 		OutputStream os = response.getOutputStream();
 		ImageOutputStream ios = ImageIO.createImageOutputStream(os);
