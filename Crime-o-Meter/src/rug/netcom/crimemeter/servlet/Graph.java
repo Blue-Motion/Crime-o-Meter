@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -37,6 +38,7 @@ public class Graph extends HttpServlet {
 		String days = request.getParameter("days");
 		String location = request.getParameter("location");
 		String type = request.getParameter("type");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
 		int ndays = (days != null) ? Integer.parseInt(days) : 5;
 
 		try {
@@ -65,10 +67,9 @@ public class Graph extends HttpServlet {
 		for(int i=0;i<=maxnumber;i++) g.drawString(Integer.toString(i), 20, H - i*20);
 		g.setColor(Color.red);
 		int j=0;
-		for(int i=0;i<=ndays;i++){
-			System.out.println(results.get(j).DATE + " : " + new java.sql.Date(d.getTime() - (ndays-i)*1000*60*60*24));
-			if(results.get(j).DATE.equals(new java.sql.Date(d.getTime() - (ndays-i)*1000*60*60*24))){
-				g.fillRect(40+20*i, H-20*results.get(j).NUMBER, 15, 20*results.get(j).NUMBER);
+		for(int i=0;i<ndays;i++){
+			if(sdf.format(results.get(j).DATE).equals(sdf.format(new java.sql.Date(d.getTime() - i*1000*60*60*24)))){
+				g.fillRect(40+(10-i)*ndays, H-20*results.get(j).NUMBER, 6, 20*results.get(j).NUMBER);
 				j++;
 			}
 			
