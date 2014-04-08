@@ -13,6 +13,7 @@ public class RMIClient {
 			Registry registry = LocateRegistry.getRegistry();
 			StatisticsInterface statistics = (StatisticsInterface) registry.lookup(StatisticsInterface.SERVICE_NAME);
 			str = statistics.getCrimesByLocation("Groningen");
+			System.out.println("All crimes in Groningen: ");
 			System.out.println(str);
 		} catch (Exception e) {
 			System.out.println("RMIClient exception: " + e);

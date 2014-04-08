@@ -1,6 +1,7 @@
-package rug.netcom.crimemeter.server.database;
+package rug.netcom.crimemeter.server;
 
 import rug.netcom.crimemeter.messages.Report;
+import rug.netcom.crimemeter.server.database.DBConnector;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;

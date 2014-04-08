@@ -7,6 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
 public class Report implements Serializable {
 
@@ -14,6 +15,7 @@ public class Report implements Serializable {
 	private int id;
 	private String type, message, location;
 	private Timestamp time;
+	private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy, hh:mm");
 
 	public Report(int id, String type, String location, String message, Timestamp time) {
 		this.setId(id);
@@ -85,7 +87,7 @@ public class Report implements Serializable {
 	}
 
 	public String toString() {
-		return time + ":" + type + "." + message;
+		 return sdf.format(time) + ":" + type + "@" + location + ", " + message + "\n";
 	}
 
 	public int getId() {
