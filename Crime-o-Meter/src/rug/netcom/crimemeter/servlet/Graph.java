@@ -30,7 +30,7 @@ import rug.netcom.crimemeter.server.StatisticsInterface;
 @WebServlet("/graph")
 public class Graph extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static int W = 300, H = 200;
+	private int W = 300, H = 200;
 
 	/** Draw a Graphical Chart in response to a user request */
 	public void doGet(HttpServletRequest request, HttpServletResponse response)throws IOException {
@@ -38,8 +38,6 @@ public class Graph extends HttpServlet {
 		Calendar cal = Calendar.getInstance();
 		Date d = cal.getTime();
 		String days = request.getParameter("days");
-		String location = request.getParameter("location");
-		String type = request.getParameter("type");
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/M/yyyy");
 		int ndays = (days != null) ? Integer.parseInt(days) : 5;
 
@@ -52,7 +50,9 @@ public class Graph extends HttpServlet {
 		  }
 		
 		int maxnumber = Collections.max(results).NUMBER;
-		
+		W = 20 + 10* ndays;
+        H = 30 + 20 * maxnumber;
+        
 		response.setContentType("image/jpeg");
 
 		// Create an Image
@@ -68,11 +68,9 @@ public class Graph extends HttpServlet {
 		for(int i=0;i<=maxnumber;i++) g.drawString(Integer.toString(i), 10, H - i*20);
 		g.setColor(Color.red);
 		int j=0;
-		for(int i=0;i<ndays;i++){
+		for(int i=ndays-1;i>=0;i--){
 			int n = results.get(j).NUMBER;
 			if(sdf.format(results.get(j).DATE).equals(sdf.format(new java.sql.Date(d.getTime() - i*1000*60*60*24)))){
-				System.out.println("number" + n + " " + i);
-				
 				g.fillRect(10+10*(ndays-i), H-20*n-10, 6, 20*n+10);
 				j++;
 				if(j >= results.size()) break;

@@ -50,7 +50,6 @@ public class Statistics implements StatisticsInterface {
 		Date date = new Date();
 		ArrayList<Graphdata> results = null;
 		Date ts = new Date(date.getTime() - days*1000*60*60*24);
-		System.out.println(ts);
 		try {
 			results = m.readCrimesPerDay(null, new java.sql.Date(ts.getTime()));
 		} catch (Exception e) {

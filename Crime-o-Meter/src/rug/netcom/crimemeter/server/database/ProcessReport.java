@@ -1,17 +1,13 @@
-package rug.netcom.crimemeter.server.socket;
-
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
+package rug.netcom.crimemeter.server.database;
 
 import rug.netcom.crimemeter.messages.Report;
-import rug.netcom.crimemeter.server.database.DBConnector;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.QueueingConsumer;
   
-public class Worker {
+public class ProcessReport {
 
   private static final String TASK_QUEUE_NAME = "task_queue";
 
@@ -48,11 +44,5 @@ public class Worker {
 
       channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
     }         
-  }
-  
-  private static void doWork(String task) throws InterruptedException {
-    for (char ch: task.toCharArray()) {
-      if (ch == '.') Thread.sleep(1000);
-    }
   }
 }

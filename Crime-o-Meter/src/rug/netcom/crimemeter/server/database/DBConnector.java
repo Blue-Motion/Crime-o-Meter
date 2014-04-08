@@ -35,7 +35,7 @@ public class DBConnector {
 			preparedStatement = connect
 					.prepareStatement("SELECT count(id) AS number" + tpgb
 							+ ", DATE(timestamp) AS date FROM Report WHERE 1"
-							+ tp + ts + " GROUP BY date" + tpgb + " DESC");
+							+ tp + ts + " GROUP BY date" + tpgb + " ASC");
 
 			int StmtIndex = 1;
 
@@ -219,6 +219,7 @@ public class DBConnector {
 		return data;
 	}
 
+	@SuppressWarnings("unused")
 	private void writeResultSet(ResultSet resultSet) throws SQLException {
 		// resultSet is initialised before the first data set
 		while (resultSet.next()) {
@@ -244,6 +245,7 @@ public class DBConnector {
 		// close(connect);
 	}
 
+	@SuppressWarnings("unused")
 	private void close(Closeable c) {
 		try {
 			if (c != null) {

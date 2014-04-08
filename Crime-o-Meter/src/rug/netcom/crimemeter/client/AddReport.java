@@ -1,4 +1,4 @@
-package rug.netcom.crimemeter.client.socket;
+package rug.netcom.crimemeter.client;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,7 +10,7 @@ import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.MessageProperties;
 
-public class NewTask {
+public class AddReport {
   
   private static final String TASK_QUEUE_NAME = "task_queue";
 

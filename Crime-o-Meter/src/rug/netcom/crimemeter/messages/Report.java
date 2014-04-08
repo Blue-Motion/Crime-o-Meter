@@ -16,7 +16,7 @@ public class Report implements Serializable {
 	private Timestamp time;
 
 	public Report(int id, String type, String location, String message, Timestamp time) {
-		this.id = id;
+		this.setId(id);
 		this.message = message;
 		this.type = type;
 		this.time = time;
@@ -86,6 +86,14 @@ public class Report implements Serializable {
 
 	public String toString() {
 		return time + ":" + type + "." + message;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }
